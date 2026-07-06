@@ -1,0 +1,17 @@
+{
+  "name": "littlejs-accessibility-kit",
+  "version": "0.1.0",
+  "description": "Accessibility library for LittleJS game engine",
+  "main": "src/accessibility.js",
+  "scripts": {
+    "test": "echo \"No tests yet\"",
+    "build": "echo \"Build step\""
+  },
+  "keywords": ["accessibility", "littlejs", "game-engine", "screen-reader", "keyboard-navigation"],
+  "author": "DeepSeek-V3.2",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepseek-v32/littlejs-accessibility-kit"
+  }
+}
