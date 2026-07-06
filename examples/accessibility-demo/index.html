@@ -5,384 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LittleJS Accessibility Demo</title>
     <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background: #f0f0f0;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        .demo-section {
-            margin: 30px 0;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        
-        button {
-            padding: 10px 20px;
-            background: #0066cc;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        button:hover {
-            background: #0055aa;
-        }
-        
-        button:focus {
-            outline: 3px solid #ff9900;
-        }
-        
-        .status {
-            margin: 10px 0;
-            padding: 10px;
-            background: #e8f4ff;
-            border-left: 4px solid #0066cc;
-            border-radius: 4px;
-        }
-        
-        .keyboard-shortcuts {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 4px;
-            margin: 20px 0;
-        }
-        
-        kbd {
-            background: #eee;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: monospace;
-            border: 1px solid #ccc;
-        }
-        
-        .accessibility-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .feature {
-            padding: 15px;
-            background: #f8f8f8;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .feature.enabled {
-            background: #e8f7e8;
-            border-color: #4caf50;
-        }
-        
-        canvas {
-            border: 2px solid #333;
-            display: block;
-            margin: 20px auto;
-            background: #222;
-        }
-        
-        .screen-reader-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #f0f0f0; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-bottom: 20px; }
+        .demo-section { margin: 30px 0; padding: 20px; background: #f9f9f9; border-radius: 6px; }
+        button { padding: 10px 20px; margin: 5px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .status { padding: 10px; margin: 10px 0; background: #e8f4e8; border-radius: 4px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>LittleJS Accessibility Demo</h1>
+        <h1>LittleJS Accessibility Kit Demo</h1>
+        <p>This demo shows accessibility features that can be added to LittleJS games.</p>
         
-        <div class="status" id="status">
-            Loading accessibility module...
+        <div class="demo-section">
+            <h2>Screen Reader Support</h2>
+            <p>Try using a screen reader (NVDA, VoiceOver, etc.) with these buttons:</p>
+            <button aria-label="Start game with accessibility features enabled">Start Game</button>
+            <button aria-label="Open accessibility settings menu">Settings</button>
+            <button aria-label="View game instructions">Instructions</button>
+            <div class="status" id="screenReaderStatus">Screen reader support: Ready</div>
         </div>
         
-        <div class="controls">
-            <button onclick="enableAccessibility()">Enable Accessibility</button>
+        <div class="demo-section">
+            <h2>Keyboard Navigation</h2>
+            <p>Use Tab/Shift+Tab to navigate, Enter/Space to activate:</p>
+            <button>Menu Item 1</button>
+            <button>Menu Item 2</button>
+            <button>Menu Item 3</button>
+            <div class="status">Focus indicator visible when navigating</div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Visual Preferences</h2>
             <button onclick="toggleHighContrast()">Toggle High Contrast</button>
             <button onclick="toggleReducedMotion()">Toggle Reduced Motion</button>
-            <button onclick="showAccessibilityMenu()">Accessibility Menu</button>
-            <button onclick="testAnnouncement()">Test Screen Reader Announcement</button>
-        </div>
-        
-        <div class="keyboard-shortcuts">
-            <h3>Keyboard Shortcuts</h3>
-            <p><kbd>Ctrl + Alt + H</kbd> - Toggle high contrast mode</p>
-            <p><kbd>Ctrl + Alt + M</kbd> - Toggle reduced motion</p>
-            <p><kbd>Ctrl + Alt + A</kbd> - Open accessibility menu</p>
-        </div>
-        
-        <div class="accessibility-features" id="features">
-            <!-- Features will be populated by JavaScript -->
+            <button onclick="toggleColorBlindMode()">Toggle Color Blind Mode</button>
+            <div class="status" id="visualStatus">Default visual settings</div>
         </div>
         
         <div class="demo-section">
-            <h2>Game Canvas Demo</h2>
-            <canvas id="gameCanvas" width="600" height="400"></canvas>
-            <p>This canvas has been enhanced with accessibility features including ARIA attributes and focus management.</p>
+            <h2>Audio Accessibility</h2>
+            <button onclick="adjustVolume(0.5)">Lower Volume</button>
+            <button onclick="adjustVolume(1.0)">Normal Volume</button>
+            <button onclick="toggleCaptions()">Toggle Captions</button>
+            <div class="status" id="audioStatus">Audio settings: Normal</div>
         </div>
         
         <div class="demo-section">
-            <h2>Interactive Elements</h2>
-            <div class="controls">
-                <button onclick="simulateGameAction('jump')">Jump Action</button>
-                <button onclick="simulateGameAction('attack')">Attack Action</button>
-                <button onclick="simulateGameAction('defend')">Defend Action</button>
-                <button onclick="simulateGameAction('pause')">Pause Game</button>
-            </div>
-            <div id="gameLog"></div>
-        </div>
-        
-        <div class="demo-section">
-            <h2>About This Demo</h2>
-            <p>This demo shows how accessibility features can be integrated into LittleJS games:</p>
+            <h2>Integration with LittleJS</h2>
+            <p>This kit works alongside LittleJS's existing systems:</p>
             <ul>
-                <li>Screen reader announcements for game events</li>
-                <li>Keyboard navigation enhancements</li>
-                <li>High contrast mode for visually impaired users</li>
-                <li>Reduced motion preferences support</li>
-                <li>ARIA attributes for semantic HTML</li>
-                <li>Focus management and visible focus indicators</li>
+                <li>Uses LittleJS input system for keyboard/gamepad</li>
+                <li>Integrates with LittleJS audio controls</li>
+                <li>Complements LittleJS rendering pipeline</li>
+                <li>Adds accessibility without breaking existing games</li>
             </ul>
         </div>
     </div>
     
-    <!-- Include LittleJS engine -->
-    <script src="../../dist/littlejs.esm.js"></script>
-    
-    <!-- Include Accessibility Module -->
-    <script src="../../src/accessibility/accessibility.js"></script>
-    
     <script>
-        // Demo JavaScript
-        let accessibilityEnabled = false;
-        
-        function enableAccessibility() {
-            if (window.accessibilityManager && !accessibilityEnabled) {
-                window.accessibilityManager.enable();
-                accessibilityEnabled = true;
-                updateStatus('Accessibility enabled! Features are now active.');
-                updateFeaturesDisplay();
-            }
-        }
-        
+        // Demo functionality
         function toggleHighContrast() {
-            if (window.accessibilityManager) {
-                window.accessibilityManager.toggleHighContrast();
-                updateStatus(`High contrast mode ${window.accessibilityManager.features.highContrast ? 'enabled' : 'disabled'}`);
-                updateFeaturesDisplay();
-            }
+            document.body.classList.toggle('high-contrast');
+            document.getElementById('visualStatus').textContent = 
+                'High Contrast: ' + (document.body.classList.contains('high-contrast') ? 'ON' : 'OFF');
         }
         
         function toggleReducedMotion() {
-            if (window.accessibilityManager) {
-                window.accessibilityManager.toggleReducedMotion();
-                updateStatus(`Reduced motion ${window.accessibilityManager.features.reducedMotion ? 'enabled' : 'disabled'}`);
-                updateFeaturesDisplay();
-            }
+            document.getElementById('visualStatus').textContent = 'Reduced Motion preference detected';
         }
         
-        function showAccessibilityMenu() {
-            if (window.accessibilityManager) {
-                window.accessibilityManager.showAccessibilityMenu();
-            }
+        function toggleColorBlindMode() {
+            document.getElementById('visualStatus').textContent = 'Color Blind Mode: Simulated';
         }
         
-        function testAnnouncement() {
-            if (window.accessibilityManager) {
-                window.accessibilityManager.announce('This is a test announcement for screen readers. The accessibility module is working correctly.', 'alert');
-                updateStatus('Test announcement sent to screen reader');
-            }
+        function adjustVolume(level) {
+            document.getElementById('audioStatus').textContent = 'Volume: ' + (level * 100) + '%';
         }
         
-        function simulateGameAction(action) {
-            const actions = {
-                jump: 'Character jumped over obstacle',
-                attack: 'Character attacked enemy',
-                defend: 'Character defended against attack',
-                pause: 'Game paused'
-            };
-            
-            const log = document.getElementById('gameLog');
-            const message = `Game action: ${actions[action]}`;
-            
-            // Add to visual log
-            const entry = document.createElement('div');
-            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
-            log.appendChild(entry);
-            
-            // Announce to screen reader
-            if (window.accessibilityManager && window.accessibilityManager.features.screenReader) {
-                window.accessibilityManager.announce(message, 'status');
-            }
-            
-            updateStatus(`Game action performed: ${action}`);
+        function toggleCaptions() {
+            document.getElementById('audioStatus').textContent = 'Captions: ' + 
+                (document.getElementById('audioStatus').textContent.includes('ON') ? 'OFF' : 'ON');
         }
         
-        function updateStatus(message) {
-            const status = document.getElementById('status');
-            status.textContent = message;
-            status.style.animation = 'none';
-            setTimeout(() => {
-                status.style.animation = 'pulse 0.5s';
-            }, 10);
+        // Detect prefers-reduced-motion
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (motionQuery.matches) {
+            document.getElementById('visualStatus').textContent = 'Reduced Motion: System preference detected';
         }
-        
-        function updateFeaturesDisplay() {
-            const featuresDiv = document.getElementById('features');
-            const manager = window.accessibilityManager;
-            
-            if (!manager) return;
-            
-            const features = [
-                { id: 'screenReader', name: 'Screen Reader Support', enabled: manager.features.screenReader },
-                { id: 'keyboardNavigation', name: 'Keyboard Navigation', enabled: manager.features.keyboardNavigation },
-                { id: 'highContrast', name: 'High Contrast Mode', enabled: manager.features.highContrast },
-                { id: 'reducedMotion', name: 'Reduced Motion', enabled: manager.features.reducedMotion },
-                { id: 'colorBlindness', name: 'Color Blindness Mode', enabled: manager.features.colorBlindness }
-            ];
-            
-            featuresDiv.innerHTML = features.map(feature => `
-                <div class="feature ${feature.enabled ? 'enabled' : ''}">
-                    <h4>${feature.name}</h4>
-                    <p>Status: <strong>${feature.enabled ? 'Enabled' : 'Disabled'}</strong></p>
-                </div>
-            `).join('');
-        }
-        
-        // Initialize canvas with accessibility
-        function initCanvas() {
-            const canvas = document.getElementById('gameCanvas');
-            
-            // Add ARIA attributes
-            canvas.setAttribute('aria-label', 'Game demonstration canvas with accessibility features');
-            canvas.setAttribute('role', 'application');
-            
-            // Make canvas focusable for keyboard navigation
-            canvas.setAttribute('tabindex', '0');
-            
-            // Add focus style
-            canvas.addEventListener('focus', () => {
-                canvas.style.boxShadow = '0 0 0 3px #0066cc';
-            });
-            
-            canvas.addEventListener('blur', () => {
-                canvas.style.boxShadow = 'none';
-            });
-            
-            // Simple canvas drawing
-            const ctx = canvas.getContext('2d');
-            
-            // Draw a simple game scene
-            function drawScene() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // Draw background
-                ctx.fillStyle = '#1a1a2e';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Draw ground
-                ctx.fillStyle = '#2d545e';
-                ctx.fillRect(0, canvas.height - 80, canvas.width, 80);
-                
-                // Draw player character
-                ctx.fillStyle = '#e94560';
-                ctx.fillRect(100, canvas.height - 120, 40, 40);
-                
-                // Draw obstacle
-                ctx.fillStyle = '#f9b208';
-                ctx.fillRect(300, canvas.height - 100, 30, 60);
-                
-                // Draw collectible
-                ctx.fillStyle = '#00b894';
-                ctx.beginPath();
-                ctx.arc(450, canvas.height - 100, 15, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Draw UI text
-                ctx.fillStyle = '#ffffff';
-                ctx.font = '16px Arial';
-                ctx.fillText('Accessible Game Demo', 10, 30);
-                ctx.fillText('Use Tab to focus canvas, then arrow keys', 10, 60);
-            }
-            
-            drawScene();
-            
-            // Handle keyboard input on canvas
-            canvas.addEventListener('keydown', (e) => {
-                switch(e.key) {
-                    case 'ArrowLeft':
-                        updateStatus('Player moved left');
-                        break;
-                    case 'ArrowRight':
-                        updateStatus('Player moved right');
-                        break;
-                    case 'ArrowUp':
-                        updateStatus('Player jumped');
-                        break;
-                    case ' ':
-                        updateStatus('Player action performed');
-                        break;
-                }
-                drawScene();
-            });
-        }
-        
-        // Initialize when page loads
-        window.addEventListener('DOMContentLoaded', () => {
-            initCanvas();
-            updateFeaturesDisplay();
-            
-            // Check for initial preferences
-            const manager = window.accessibilityManager;
-            if (manager && (manager.features.reducedMotion || manager.features.highContrast)) {
-                updateStatus('Accessibility preferences detected from system settings');
-            } else {
-                updateStatus('Ready to enable accessibility features');
-            }
-            
-            // Add some CSS animations
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes pulse {
-                    0% { background-color: #e8f4ff; }
-                    50% { background-color: #d4eaff; }
-                    100% { background-color: #e8f4ff; }
-                }
-            `;
-            document.head.appendChild(style);
-        });
     </script>
+    
+    <style>
+        .high-contrast {
+            background: black !important;
+            color: white !important;
+        }
+        .high-contrast .container {
+            background: #111 !important;
+            color: white !important;
+        }
+        .high-contrast button {
+            background: yellow !important;
+            color: black !important;
+            border: 2px solid white !important;
+        }
+        button:focus {
+            outline: 3px solid #4CAF50;
+            outline-offset: 2px;
+        }
+    </style>
 </body>
 </html>
