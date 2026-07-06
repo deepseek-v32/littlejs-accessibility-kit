@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LittleJS Accessibility Demo</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #f0f0f0; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-bottom: 20px; }
+        .demo-section { margin: 30px 0; padding: 20px; background: #f9f9f9; border-radius: 6px; }
+        button { padding: 10px 20px; margin: 5px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .status { padding: 10px; margin: 10px 0; background: #e8f4e8; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LittleJS Accessibility Kit Demo</h1>
+        <p>This demo shows accessibility features that can be added to LittleJS games.</p>
+        
+        <div class="demo-section">
+            <h2>Screen Reader Support</h2>
+            <p>Try using a screen reader (NVDA, VoiceOver, etc.) with these buttons:</p>
+            <button aria-label="Start game with accessibility features enabled">Start Game</button>
+            <button aria-label="Open accessibility settings menu">Settings</button>
+            <button aria-label="View game instructions">Instructions</button>
+            <div class="status" id="screenReaderStatus">Screen reader support: Ready</div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Keyboard Navigation</h2>
+            <p>Use Tab/Shift+Tab to navigate, Enter/Space to activate:</p>
+            <button>Menu Item 1</button>
+            <button>Menu Item 2</button>
+            <button>Menu Item 3</button>
+            <div class="status">Focus indicator visible when navigating</div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Visual Preferences</h2>
+            <button onclick="toggleHighContrast()">Toggle High Contrast</button>
+            <button onclick="toggleReducedMotion()">Toggle Reduced Motion</button>
+            <button onclick="toggleColorBlindMode()">Toggle Color Blind Mode</button>
+            <div class="status" id="visualStatus">Default visual settings</div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Audio Accessibility</h2>
+            <button onclick="adjustVolume(0.5)">Lower Volume</button>
+            <button onclick="adjustVolume(1.0)">Normal Volume</button>
+            <button onclick="toggleCaptions()">Toggle Captions</button>
+            <div class="status" id="audioStatus">Audio settings: Normal</div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Integration with LittleJS</h2>
+            <p>This kit works alongside LittleJS's existing systems:</p>
+            <ul>
+                <li>Uses LittleJS input system for keyboard/gamepad</li>
+                <li>Integrates with LittleJS audio controls</li>
+                <li>Complements LittleJS rendering pipeline</li>
+                <li>Adds accessibility without breaking existing games</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Demo functionality
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            document.getElementById('visualStatus').textContent = 
+                'High Contrast: ' + (document.body.classList.contains('high-contrast') ? 'ON' : 'OFF');
+        }
+        
+        function toggleReducedMotion() {
+            document.getElementById('visualStatus').textContent = 'Reduced Motion preference detected';
+        }
+        
+        function toggleColorBlindMode() {
+            document.getElementById('visualStatus').textContent = 'Color Blind Mode: Simulated';
+        }
+        
+        function adjustVolume(level) {
+            document.getElementById('audioStatus').textContent = 'Volume: ' + (level * 100) + '%';
+        }
+        
+        function toggleCaptions() {
+            document.getElementById('audioStatus').textContent = 'Captions: ' + 
+                (document.getElementById('audioStatus').textContent.includes('ON') ? 'OFF' : 'ON');
+        }
+        
+        // Detect prefers-reduced-motion
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (motionQuery.matches) {
+            document.getElementById('visualStatus').textContent = 'Reduced Motion: System preference detected';
+        }
+    </script>
+    
+    <style>
+        .high-contrast {
+            background: black !important;
+            color: white !important;
+        }
+        .high-contrast .container {
+            background: #111 !important;
+            color: white !important;
+        }
+        .high-contrast button {
+            background: yellow !important;
+            color: black !important;
+            border: 2px solid white !important;
+        }
+        button:focus {
+            outline: 3px solid #4CAF50;
+            outline-offset: 2px;
+        }
+    </style>
+</body>
+</html>
